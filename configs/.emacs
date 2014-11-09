@@ -88,3 +88,19 @@
 
 (add-to-list 'flymake-allowed-file-name-masks
              '("\\.java$" codetech-java-flymake-init flymake-simple-cleanup))
+
+;; Just runs a program.
+(defun codetech-java-run ()
+  (interactive)
+  (shell-command "java Main < sample.in"))
+
+;; Tests that a program outputs the correct result.
+(defun codetech-java-run-diff ()
+  (interactive)
+  (shell-command "java Main < sample.in | diff sample.out -"))
+
+(add-hook 'java-mode-hook
+          (lambda ()
+            (setq compile-command "make all -k")
+            (local-set-key (kbd "<f6>") 'codetech-java-run)
+            (local-set-key (kbd "<f7>") 'codetech-java-run-diff)))
