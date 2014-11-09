@@ -35,6 +35,8 @@ all:
 
 Then run `make -k` in the directory containing the Makefile.
 
+(Note that Makefiles must be indented with tabs, not spaces.)
+
 
 ## Testing
 
@@ -44,15 +46,17 @@ Simply run the following command to test compiled code:
 java Main < sample.in | diff sample.out -
 ```
 
-If there is no output, the program was succesful. Output indicates differences
-between your output and what is expected.
+- No output: The program was succesful.
+- Output: There were differences between your output and what was expected.
 
 
 ## Developing with Emacs
 
-If you use the emacs config at `configs/.emacs` (by copying or symlinking it to
-`~/.emacs`), then the following conveniences will be provided:
+If you use the Emacs config at `configs/.emacs` (by copying or symlinking it to
+`~/.emacs`, for instance), then the following keyboard shortcuts will be provided:
 
 - F5: Compile.
 - F6: Run program, printing output.
 - F7: Run program, diffing output against what is expected.
+
+Line-by-line syntax / error checking will also be available.
