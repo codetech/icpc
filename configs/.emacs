@@ -72,6 +72,13 @@
 
 ;;; Perform automatic syntax checking with flymake.
 
+;; The Makefile must include these lines:
+;; 
+;;     .PHONY: check-syntax
+;;
+;;     check-syntax:
+;;             javac -Xlint $(CHK_SOURCES)
+
 (require 'flymake)
 (add-hook 'java-mode-hook 'flymake-mode-on)
 
