@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.*;
 
 public class Main {
     
@@ -12,24 +12,26 @@ public class Main {
 	}
 	return product;
     }
+
+    public static long getMaxBytes(int n) {
+        long best = 0;
+        for (int structs = 1; structs < 80; structs += 1) {
+            if (structs > n / structs) {
+                break;
+            }
+            long result = distribute(n, structs);
+            if (result > best) {
+                best = result;
+            }
+        }
+        return best;
+    }
     
     public static void main(String[] args) {
-	for (int n = 3; n <= 160; n++) {
-	    long best = 0;
-	    int bestStructs = 0;
-	    for (int structs = 1; structs < 80; structs += 1) {
-		if (structs > n / structs) {
-		    break;
-		}
-		long result = distribute(n, structs);
-		if (result > best) {
-		    best = result;
-		    bestStructs = structs;
-		}
-	    }
-	    System.out.println("For n=" + n +
-			       ", structs=" + bestStructs +
-			       ", result=" + best);
-	}
+        Scanner s = new Scanner(System.in);
+
+        while (s.hasNext()) {
+            System.out.println(getMaxBytes(s.nextInt()));
+        }
     }
 }
