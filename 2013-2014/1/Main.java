@@ -1,17 +1,12 @@
-import java.io.Console;
-import java.util.Iterator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.*;
 
 public class Main {
 
-    private static Console console = System.console();
+    private static Scanner s = new Scanner(System.in);
     
     private static List<String> getLetters(String regex) {
-	String input = console.readLine();
+	String input = s.nextLine();
         List<String> list = Arrays.asList(input.split(regex));
 	// Special case where empty string will be included as the
 	// first match.
@@ -46,7 +41,7 @@ public class Main {
 	}
 
 	// Game loop.
-	while (true) {
+	while (s.hasNext()) { 
 	    // Get user input.
 	    List<String> descriptors = getLetters("");
 	    List<String> letters = getLetters("");
