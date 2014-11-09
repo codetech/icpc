@@ -47,7 +47,7 @@ java Main < sample.in | diff sample.out -
 ```
 
 - No output: The program was succesful.
-- Output: There were differences between your output and what was expected.
+- Output: There were differences between your program's output and what was expected.
 
 
 ## Developing with Emacs
