@@ -4,14 +4,6 @@ import java.util.regex.*;
 /**
  * Solves ACM Riverside Nov. 8 2014 Problem #9, "Anagram Pyramids".
  *
- * Usage:
- *
- *     make all -k
- *     java Main < s9.in > o9.out
- *     diff o9.out s9.out
- *
- * If the diff produces no output then the program presumably works.
- *
  * @author Jackson Ray Hamilton
  * @author Kyle San Clemente
  */

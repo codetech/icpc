@@ -101,6 +101,5 @@
 
 (add-hook 'java-mode-hook
           (lambda ()
-            (setq compile-command "make all -k")
             (local-set-key (kbd "<f6>") 'codetech-java-run)
             (local-set-key (kbd "<f7>") 'codetech-java-run-diff)))
