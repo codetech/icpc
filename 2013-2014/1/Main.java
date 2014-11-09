@@ -1,6 +1,11 @@
 import java.util.*;
 import java.util.regex.*;
 
+/**
+ * Solves 2013-2014 Problem #1, "Epithets Among Enemies".
+ *
+ * @author Jackson Ray Hamilton
+ */
 public class Main {
 
     private static Scanner s = new Scanner(System.in);

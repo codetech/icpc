@@ -1,5 +1,11 @@
 import java.util.*;
 
+/**
+ * Solves 2013-2014 Problem #10, "BigClass".
+ *
+ * @author Jackson Ray Hamilton
+ * @author Connor Barnes
+ */
 public class Main {
     
     public static long distribute(int n, int structs) {

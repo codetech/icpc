@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.regex.*;
 
 /**
- * Solves ACM Riverside Nov. 8 2014 Problem #9, "Anagram Pyramids".
+ * Solves 2014-2015 Problem #9, "Anagram Pyramids".
  *
  * @author Jackson Ray Hamilton
  * @author Kyle San Clemente
