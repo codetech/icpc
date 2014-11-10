@@ -21,7 +21,7 @@
 
 ;; Match parenthesis.
 (show-paren-mode t)
-(setq-default show-paren-delay 0)
+(setq show-paren-delay 0)
 
 
 ;;;; Behavior
