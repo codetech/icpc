@@ -33,7 +33,7 @@ all:
 
 (Possibly adding additional compilation targets, as in `javac Main.java MyClass.java`.)
 
-Then run `make -k` in the directory containing the Makefile.
+Then run `make` in the directory containing the Makefile.
 
 (Note that Makefiles must be indented with tabs, not spaces.)
 
@@ -60,3 +60,30 @@ If you use the Emacs config at `configs/.emacs` (by copying or symlinking it to
 - F7: Run program, diffing output against what is expected.
 
 Line-by-line syntax / error checking will also be available.
+
+
+## Developing with Vim
+
+`cd` to the directory of the program you want to work on and go to town.
+
+Alternate between Vim and your shell, issuing the commands from the "Compiling"
+and "Testing" sections as needed. You can use `:shell` to temporarily leave Vim,
+and when you're done you can type `exit` to return.
+
+
+## Developing with Geany
+
+Geany uses "regular" keyboard shortcuts, has tabs, a debugger, and regex
+find-and-replace. It's also quite fast. If you don't like Emacs or Vim, and
+Eclipse is too slow or complicated for you, then use this.
+
+- Ctrl+Tab: Cycle through tabs.
+- Ctrl+H: Find-and-replace.
+- F2: Switch to editor.
+- F4: Switch to terminal.
+- Shift-F9: Compile.
+- F5: Run program interactively.
+
+Via "Build" > "Set Build Commands" > "Execute commands", you can set "1." (F5)
+to something more convenient (like the diffing command from the "Testing"
+section), and set "2." to an additional menu-item-only command.
