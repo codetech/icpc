@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.regex.*;
 
 /**
  * Solves 2014-2015 Problem #9, "Anagram Pyramids".
@@ -8,8 +7,6 @@ import java.util.regex.*;
  * @author Kyle San Clemente
  */
 public class Main {
-
-    public static final Pattern numberPattern = Pattern.compile("\\d+");
 
     /**
      * Concatenates a char onto the end of an array.
