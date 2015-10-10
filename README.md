@@ -52,8 +52,8 @@ java Main < sample.in | diff sample.out -
 
 ## Developing with Emacs
 
-If you use the Emacs config at `configs/.emacs` (by copying or symlinking it to
-`~/.emacs`, for instance), then the following keyboard shortcuts will be provided:
+If you use the Emacs config at `configs/init.el` (by copying or symlinking it to
+`~/.emacs.d/init.el`, for instance), then the following keyboard shortcuts will be provided:
 
 - F5: Compile.
 - F6: Run program, printing output.
