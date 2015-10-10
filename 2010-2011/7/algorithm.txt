@@ -1,0 +1,23 @@
+BlastRadius
+  - Has X/Y/Radius
+
+GameMap
+  - Represent cells with an ArrayList of strings
+  - Progressively add cells
+  - After first line, set width
+  - Calculate an X/Y position with ((width*y)+x)
+  #getBlastRadii
+    - For each M and B
+      - Generate vectors (X/Y's) to Z's
+      - Determine the set of radii sufficient to intersect
+        the edges of these vectors
+        - Specifically, that's sqrt(pow(x,2)+pow(y,2))
+    - Return an array of BlastRadius objects
+  #doesIntersectZombies
+    - Given a radius, return true if all zombie vectors are less than or
+      equal to the radii of all mines
+
+Create a GameMap.
+Get its blast radii.
+Sort the radii by smallest.
+For each radii, check if it doesIntersectZombies. If true, print it.
