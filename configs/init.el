@@ -47,6 +47,7 @@
 
 ;;; Appearance
 
+(setq inhibit-splash-screen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -65,6 +66,7 @@
 
 (electric-indent-mode)
 (electric-pair-mode)
+(setq electric-pair-skip-self nil)
 (global-subword-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
@@ -115,8 +117,6 @@
 ;;   check-syntax:
 ;;           javac -Xlint $(CHK_SOURCES)
 
-(add-hook 'java-mode-hook 'flymake-mode-on)
-
 (defun codetech-java-flymake-init ()
   "Initialize flymake arguments."
   (list "javac" (list (flymake-init-create-temp-buffer-copy
@@ -135,12 +135,15 @@
   (interactive)
   (shell-command "java Main < sample.in | diff sample.out -"))
 
-(add-hook
- 'java-mode-hook
- (lambda ()
-   ;; After using `M-x compile` once (probably to customize the compilation
-   ;; command), recompile with the same settings as before. The basic flow is to
-   ;; recompile, and if there are no errors, run and diff.
-   (local-set-key (kbd "<f5>") 'recompile)
-   (local-set-key (kbd "<f6>") 'codetech-java-run)
-   (local-set-key (kbd "<f7>") 'codetech-java-run-diff)))
+(defun codetech-java-mode-hook ()
+  (setq c-basic-offset 2)
+  (flymake-mode-on)
+  ;; After using `M-x compile` once (probably to customize the
+  ;; compilation command), recompile with the same settings as
+  ;; before. The basic flow is to recompile, and if there are no
+  ;; errors, run and diff.
+  (local-set-key (kbd "<f5>") 'recompile)
+  (local-set-key (kbd "<f6>") 'codetech-java-run)
+  (local-set-key (kbd "<f7>") 'codetech-java-run-diff))
+
+(add-hook 'java-mode-hook 'codetech-java-mode-hook)
