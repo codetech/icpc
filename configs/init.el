@@ -91,20 +91,28 @@
 
 ;;; Compilation
 
-(defun codetech-kill-compilation-buffer (buffer string)
-  "Kill a compilation buffer if succeeded without warnings."
-  (when (and
-         (string-match-p "compilation" (buffer-name buffer))
-         (string-match-p "finished" string)
-         (not
-          (with-current-buffer buffer
-            (search-forward "warning" nil t))))
-    (run-with-timer 0.5 nil
-                    (lambda ()
-                      (with-current-buffer buffer
-                        (kill-buffer-and-window))))))
-
-(add-hook 'compilation-finish-functions 'codetech-kill-compilation-buffer)
+(defun codetech-recompile ()
+  "Recompile and restore window state."
+  (interactive)
+  (let ((window-count (count-windows))
+        (cleanup
+         (lambda ()
+           (with-current-buffer buffer
+             (cond
+              ((> window-count 1) (kill-buffer))
+              (t (kill-buffer-and-window))))))
+        (maybe-cleanup
+         (lambda (buffer string)
+           (remove-hook 'compilation-finish-functions maybe-cleanup)
+           (when (and
+                  (string-match-p "compilation" (buffer-name buffer))
+                  (string-match-p "finished" string)
+                  (not
+                   (with-current-buffer buffer
+                     (search-forward "warning" nil t))))
+             (run-with-timer 0.5 nil cleanup)))))
+    (add-hook 'compilation-finish-functions maybe-cleanup)
+    (call-interactively 'recompile)))
 
 ;;; Java
 
@@ -142,7 +150,7 @@
   ;; compilation command), recompile with the same settings as
   ;; before. The basic flow is to recompile, and if there are no
   ;; errors, run and diff.
-  (local-set-key (kbd "<f5>") 'recompile)
+  (local-set-key (kbd "<f5>") 'codetech-recompile)
   (local-set-key (kbd "<f6>") 'codetech-java-run)
   (local-set-key (kbd "<f7>") 'codetech-java-run-diff))
 
