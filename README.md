@@ -21,6 +21,8 @@ For Java solutions, each directory should include:
 
 - A `Main.java` file with a `public static void main` method.
 
+A basic problem setup is available in the `template/` directory.
+
 
 ## Compiling
 
