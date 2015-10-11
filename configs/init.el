@@ -95,22 +95,23 @@
   "Recompile and restore window state."
   (interactive)
   (let ((window-count (count-windows))
-        (cleanup
-         (lambda ()
-           (with-current-buffer buffer
-             (cond
-              ((> window-count 1) (kill-buffer))
-              (t (kill-buffer-and-window))))))
-        (maybe-cleanup
-         (lambda (buffer string)
-           (remove-hook 'compilation-finish-functions maybe-cleanup)
-           (when (and
-                  (string-match-p "compilation" (buffer-name buffer))
-                  (string-match-p "finished" string)
-                  (not
-                   (with-current-buffer buffer
-                     (search-forward "warning" nil t))))
-             (run-with-timer 0.5 nil cleanup)))))
+        cleanup maybe-cleanup)
+    (setq cleanup
+          (lambda (buffer)
+            (with-current-buffer buffer
+              (cond
+               ((> window-count 1) (kill-buffer))
+               (t (kill-buffer-and-window)))))
+          maybe-cleanup
+          (lambda (buffer string)
+            (remove-hook 'compilation-finish-functions maybe-cleanup)
+            (when (and
+                   (string-match-p "compilation" (buffer-name buffer))
+                   (string-match-p "finished" string)
+                   (not
+                    (with-current-buffer buffer
+                      (search-forward "warning" nil t))))
+              (run-with-timer 0.5 nil cleanup buffer))))
     (add-hook 'compilation-finish-functions maybe-cleanup)
     (call-interactively 'recompile)))
 
