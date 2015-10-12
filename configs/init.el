@@ -8,9 +8,12 @@
 
 ;;   emacs -q -l /path/to/icpc/configs/init.el
 
+(require 'cc-vars)
 (require 'dired)
-(require 'dired-x)
+(require 'dired-x) ; dired-jump
+(require 'elec-pair)
 (require 'flymake)
+(require 'gud)
 (require 'ido)
 (require 'paren)
 
