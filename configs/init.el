@@ -3,7 +3,8 @@
 ;; Print this file out before a competition and transcribe it to
 ;; ~/.emacs.d/init.el when the competition begins.
 
-;; To emulate a competition-like development environment, open emacs like so:
+;; To emulate a competition-like development environment, open emacs
+;; like so:
 
 ;;   emacs -q -l /path/to/icpc/configs/init.el
 
@@ -115,6 +116,40 @@
     (add-hook 'compilation-finish-functions maybe-cleanup)
     (call-interactively 'recompile)))
 
+;;; Debugging
+
+(defun codetech-gud-mode-hook ()
+  (local-set-key (kbd "<f5>") 'gud-step)
+  (local-set-key (kbd "<f6>") 'gud-next)
+  (local-set-key (kbd "<f7>") 'gud-finish))
+
+(add-hook 'gud-mode-hook 'codetech-gud-mode-hook)
+
+(global-set-key (kbd "M-b") 'gud-break)
+(global-set-key (kbd "M-S-b") 'gud-remove)
+(global-set-key (kbd "M-p") 'gud-print)
+(global-set-key (kbd "M-i") 'gud-pstar)
+
+;;; Java Debugging
+
+(defun codetech-jdb-command ()
+  "Call some debugger command."
+  (interactive)
+  (let* ((commands '("locals"
+                     "cont"
+                     "help"
+                     "exit"
+                     "run"))
+         (command (ido-completing-read
+                   "Command: " commands nil t)))
+    (when command
+      (gud-call command))))
+
+(defun codetech-jdb-mode-hook ()
+  (local-set-key (kbd "<f8>") 'codetech-jdb-command))
+
+(add-hook 'jdb-mode-hook 'codetech-jdb-mode-hook)
+
 ;;; Java
 
 ;; Perform automatic syntax checking with flymake.
@@ -131,8 +166,9 @@
   (list "javac" (list (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-with-folder-structure))))
 
-(add-to-list 'flymake-allowed-file-name-masks
-             '("\\.java\\'" codetech-java-flymake-init flymake-simple-cleanup))
+(add-to-list
+ 'flymake-allowed-file-name-masks
+ '("\\.java\\'" codetech-java-flymake-init flymake-simple-cleanup))
 
 (defun codetech-java-run ()
   "Run a program."
@@ -144,15 +180,28 @@
   (interactive)
   (shell-command "java Main < sample.in | diff sample.out -"))
 
+(defun codetech-java-debug ()
+  "Start a Java debugger."
+  (interactive)
+  (let* (;; Ensure the debugger opens vertically.
+         (split-height-threshold nil)
+         (split-width-threshold 0)
+         (buffer (get-buffer-create "*gud-Main*"))
+         (window (display-buffer buffer)))
+    (select-window window)
+    (jdb "jdb Main sample.in")))
+
 (defun codetech-java-mode-hook ()
   (setq c-basic-offset 2)
   (flymake-mode-on)
   ;; After using `M-x compile` once (probably to customize the
-  ;; compilation command), recompile with the same settings as
-  ;; before. The basic flow is to recompile, and if there are no
-  ;; errors, run and diff.
+  ;; compilation command), recompile with the same settings as before.
+  ;; The basic flow is to recompile, and if there are no errors, run
+  ;; and diff.  If the program does not produce expected output,
+  ;; debug.  Repeat until completion.
   (local-set-key (kbd "<f5>") 'codetech-recompile)
   (local-set-key (kbd "<f6>") 'codetech-java-run)
-  (local-set-key (kbd "<f7>") 'codetech-java-run-diff))
+  (local-set-key (kbd "<f7>") 'codetech-java-run-diff)
+  (local-set-key (kbd "<f8>") 'codetech-java-debug))
 
 (add-hook 'java-mode-hook 'codetech-java-mode-hook)
